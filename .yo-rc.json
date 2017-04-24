@@ -1,0 +1,9 @@
+{
+  "generator-react-webpack": {
+    "appName": "starvis",
+    "style": "scss",
+    "cssmodules": false,
+    "postcss": true,
+    "generatedWithVersion": 4
+  }
+}
