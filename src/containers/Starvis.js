@@ -30,7 +30,6 @@ class Starvis extends React.Component {
 	            	<div className="right">
 	            		<ImgList
 	            			currentImg={imgsInfo.currentImg}
-	            			initOpacity={imgsInfo.initOpacity}
 	            		 />
 	            		<RightBottom />
 	            	</div>
