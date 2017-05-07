@@ -21,7 +21,7 @@ const initState = {
     cityInfo: {
         didInvalidate: false,
         now: {},
-        receivedAt: ''
+        receivedAt: 0
     },
     roomsInfo: [{
         roomType: '主题房',
@@ -55,15 +55,22 @@ const store = createStore(
 )
 
 store.dispatch(fetchPostsIfNeeded()).then(() => {
-        ReactDOM.render(
-            <Provider store={store}>
+    ReactDOM.render(
+        <Provider store={store}>
                 <App />
             </Provider>,
-            document.getElementById('app')
-        );
+        document.getElementById('app')
+    );
 })
 
-let changeTimer = setInterval(() => store.dispatch(nextImg()), 2000);
+let changeTimer = setInterval(() => {
+    let nowTime = Date.now(),
+        lastFetch = store.getState().cityInfo.receivedAt;
+    if (nowTime - lastFetch > 1800000) {
+        store.dispatch(fetchPostsIfNeeded());
+    }
+    store.dispatch(nextImg());
+}, 3000);
 if (module.hot) {
     module.hot.accept('./containers/Starvis', () => {
         const NextApp = require('./containers/Starvis').default; // eslint-disable-line global-require

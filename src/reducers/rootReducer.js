@@ -65,7 +65,7 @@ function cityInfo(state = {
                 city: action.city,
                 dailyTmp: action.dailyTmp,
                 suggestion: action.suggestion,
-                lastUpdated: action.receivedAt
+                receivedAt: action.receivedAt
             })
         default:
             return state
