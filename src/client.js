@@ -1,23 +1,77 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import App from './components/App';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import { AppContainer } from 'react-hot-loader'
+import thunkMiddleware from 'redux-thunk'
+import logger from 'redux-logger'
+import App from 'containers/Starvis'
+import rootReducer from 'reducers/rootReducer'
+import { modifyRoomInfo, nextImg } from 'actions/restActions'
+import {
+    seletCity,
+    requestWeather,
+    invalidateWeather,
+    fetchWeather,
+    fetchPostsIfNeeded
+} from 'actions/weatherActions'
 
-ReactDOM.render(
-  <AppContainer>
-    <App />
-  </AppContainer>,
-  document.getElementById('app')
-);
+const initState = {
+    selectedCity: 'hangzhou',
+    cityInfo: {
+        didInvalidate: false,
+        now: {},
+        receivedAt: ''
+    },
+    roomsInfo: [{
+        roomType: '主题房',
+        price: 199
+    }, {
+        roomType: '温馨大床房',
+        price: 119
+    }, {
+        roomType: '商务大床房',
+        price: 149
+    }, {
+        roomType: '商务标间',
+        price: 149
+    }, {
+        roomType: '家庭套房',
+        price: 199
+    }],
+    imgsInfo: {
+        imgLength: 10,
+        currentImg: 0
+    }
+}
 
+const store = createStore(
+    rootReducer,
+    initState,
+    applyMiddleware(
+        thunkMiddleware,
+        logger
+    )
+)
+
+store.dispatch(fetchPostsIfNeeded()).then(() => {
+        ReactDOM.render(
+            <Provider store={store}>
+                <App />
+            </Provider>,
+            document.getElementById('app')
+        );
+})
+
+let changeTimer = setInterval(() => store.dispatch(nextImg()), 2000);
 if (module.hot) {
-  module.hot.accept('./components/App', () => {
-    const NextApp = require('./components/App').default; // eslint-disable-line global-require
-    ReactDOM.render(
-      <AppContainer>
-        <NextApp />
-      </AppContainer>,
-      document.getElementById('app')
-    );
-  });
+    module.hot.accept('./containers/Starvis', () => {
+        const NextApp = require('./containers/Starvis').default; // eslint-disable-line global-require
+        ReactDOM.render(
+            <Provider store={store}>
+                <NextApp />
+            </Provider>,
+            document.getElementById('app')
+        );
+    });
 }

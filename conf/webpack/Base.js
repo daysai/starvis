@@ -204,6 +204,8 @@ class WebpackBaseConfig {
         alias: {
           actions: `${this.srcPathAbsolute}/actions/`,
           components: `${this.srcPathAbsolute}/components/`,
+          containers: `${this.srcPathAbsolute}/containers/`,
+          reducers: `${this.srcPathAbsolute}/reducers/`,
           config: `${this.srcPathAbsolute}/config/${this.env}.js`,
           images: `${this.srcPathAbsolute}/images/`,
           sources: `${this.srcPathAbsolute}/sources/`,
