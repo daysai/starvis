@@ -1,4 +1,4 @@
-'use strict';  // eslint-disable-line
+'use strict'; // eslint-disable-line
 
 /**
  * Webpack configuration base class
@@ -9,7 +9,6 @@ const path = require('path');
 const npmBase = path.join(__dirname, '../../node_modules');
 
 class WebpackBaseConfig {
-
   constructor() {
     this._config = {};
   }
@@ -19,7 +18,7 @@ class WebpackBaseConfig {
    * @return {Array} List of included packages
    */
   get includedPackages() {
-    return [].map((pkg) => fs.realpathSync(path.join(npmBase, pkg)));
+    return [].map(pkg => fs.realpathSync(path.join(npmBase, pkg)));
   }
 
   /**
@@ -101,10 +100,7 @@ class WebpackBaseConfig {
           },
           {
             test: /^.((?!cssmodule).)*\.css$/,
-            loaders: [
-              { loader: 'style-loader' },
-              { loader: 'css-loader' }
-            ]
+            loaders: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
           },
           {
             test: /\.(png|jpg|gif|mp4|ogg|svg|woff|woff2)$/,
@@ -140,10 +136,7 @@ class WebpackBaseConfig {
           },
           {
             test: /\.(js|jsx)$/,
-            include: [].concat(
-              this.includedPackages,
-              [this.srcPathAbsolute]
-            ),
+            include: [].concat(this.includedPackages, [this.srcPathAbsolute]),
             loaders: [
               // Note: Moved this to .babelrc
               { loader: 'babel-loader' }
@@ -213,10 +206,7 @@ class WebpackBaseConfig {
           styles: `${this.srcPathAbsolute}/styles/`
         },
         extensions: ['.js', '.jsx'],
-        modules: [
-          this.srcPathAbsolute,
-          'node_modules'
-        ]
+        modules: [this.srcPathAbsolute, 'node_modules']
       }
     };
   }

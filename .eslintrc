@@ -11,17 +11,20 @@
     "padded-blocks": 0,
     "react/prefer-stateless-function": 0,
     "react/jsx-filename-extension": 0,
-    "no-underscore-dangle": [ "error", { "allowAfterThis": true }],
-    "import/no-unresolved": ["error", {
-        "ignore": [
-          "config",
-          "components/",
-          "stores/",
-          "actions/",
-          "sources/",
-          "styles/",
-          "images/"
-        ]
-    }]
+    "react/prop-types": 0,
+    "react/no-string-refs": 0,
+    "class-methods-use-this": 0,
+    "global-require": 0,
+    "import/no-dynamic-require": 0,
+    "no-param-reassign": 0,
+    "no-restricted-syntax": 0,
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "import/no-extraneous-dependencies": 0,
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": ["config", "components/", "stores/", "actions/", "sources/", "styles/", "images/"]
+      }
+    ]
   }
 }
