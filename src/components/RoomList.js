@@ -32,8 +32,8 @@ class RoomList extends React.Component {
     return (
       <div className="left-main">
         <ul>
-          <li key={0}>
-            <span>房型</span>
+          <li key={0} className="clearfix">
+            <span className="fl">房型</span>
             <span>门市价</span>
           </li>
           {roomsInfo.map((room, index) => (
