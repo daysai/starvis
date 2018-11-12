@@ -6,7 +6,6 @@ import thunkMiddleware from 'redux-thunk';
 // import logger from 'redux-logger';
 import App from './containers/Starvis';
 import rootReducer from './reducers/rootReducer';
-import { nextImg } from './actions/restActions';
 import { fetchPostsIfNeeded } from './actions/weatherActions';
 
 const initState = {
@@ -16,7 +15,36 @@ const initState = {
     now: {},
     receivedAt: 0
   },
-  roomsInfo: window.roomsInfo
+  roomsInfo: [
+    {
+      roomType: '主题房',
+      price: 208
+    },
+    {
+      roomType: '家庭套房',
+      price: 188
+    },
+    {
+      roomType: '商务大床房',
+      price: 158
+    },
+    {
+      roomType: '商务标间',
+      price: 158
+    },
+    {
+      roomType: '舒适标间',
+      price: 128
+    },
+    {
+      roomType: '限量大床',
+      price: 118
+    },
+    {
+      roomType: '温馨大床房',
+      price: 106
+    }
+  ]
 };
 
 const store = createStore(
@@ -43,7 +71,6 @@ setInterval(() => {
   if (nowTime - lastFetch > 1800000) {
     store.dispatch(fetchPostsIfNeeded());
   }
-  store.dispatch(nextImg());
 }, 3000);
 if (module.hot) {
   module.hot.accept('./containers/Starvis', () => {

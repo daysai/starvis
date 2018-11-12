@@ -1,10 +1,10 @@
 export const MODIFY_ROOMINFO = 'MODIFY_ROOMINFO';
-export const NEXT_IMG = 'NEXT_IMG';
 
-export function modifyRoomInfo(index, price) {
+export function modifyRoomInfo(index, roomType, price) {
   return {
     type: 'MODIFY_ROOMINFO',
     index,
+    roomType,
     price
   };
 }

@@ -13,6 +13,7 @@ function roomsInfo(state = [{}, {}], action) {
       return state.map((room, index) => {
         if (index === action.index) {
           return Object.assign({}, room, {
+            roomType: action.roomType,
             price: action.price
           });
         }
