@@ -16,11 +16,7 @@ const initState = {
     now: {},
     receivedAt: 0
   },
-  roomsInfo: window.roomsInfo,
-  imgsInfo: {
-    imgLength: 10,
-    currentImg: 0
-  }
+  roomsInfo: window.roomsInfo
 };
 
 const store = createStore(

@@ -8,9 +8,3 @@ export function modifyRoomInfo(index, price) {
     price
   };
 }
-
-export function nextImg() {
-  return {
-    type: 'NEXT_IMG'
-  };
-}

@@ -10,7 +10,7 @@ import './starvis.css';
 
 class Starvis extends React.Component {
   render() {
-    const { cityInfo, roomsInfo, imgsInfo, onChange } = this.props;
+    const { cityInfo, roomsInfo, onChange } = this.props;
     return (
       <div className="body-box">
         <div className="left">
@@ -27,7 +27,7 @@ class Starvis extends React.Component {
           />
         </div>
         <div className="right">
-          <ImgList currentImg={imgsInfo.currentImg} />
+          <ImgList />
           <RightBottom />
         </div>
       </div>
@@ -42,4 +42,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(modifyRoomInfo(index, price));
   }
 });
-export default connect(mapStatetoProps, mapDispatchToProps)(Starvis);
+export default connect(
+  mapStatetoProps,
+  mapDispatchToProps
+)(Starvis);

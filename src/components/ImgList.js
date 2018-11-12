@@ -1,58 +1,14 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
+import BannerAnim, { Element } from 'rc-banner-anim';
+import TweenOne from 'rc-tween-one';
+import 'rc-banner-anim/assets/index.css';
 
-function getStyle(obj, attr) {
-  if (obj.crrentStyle) {
-    return obj.currentStyle[attr];
-    // 兼容IE8以下
-  }
-  return getComputedStyle(obj, false)[attr];
-  // 参数false已废。照用就好
-}
-
-function startMove(obj, json) {
-  // 清理定时器
-  if (obj.timer) {
-    clearInterval(obj.timer);
-  }
-  obj.timer = setInterval(() => {
-    let bStop = false; // 如果为false就停了定时器！
-    let iCur = 0;
-    let attr;
-    // 处理属性值
-    for (attr in json) {
-      if (attr === 'opacity') {
-        iCur = Math.round(parseFloat(getStyle(obj, attr)) * 100);
-      } else {
-        iCur = parseInt(getStyle(obj, attr), 10);
-      }
-      // 定义速度值
-      let iSpeed = (json[attr] - iCur) / 8;
-      iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
-      // 检测停止：如果我发现某个值不等于目标点bStop就不能为true。
-      if (iCur !== json[attr]) {
-        bStop = false;
-      } else {
-        bStop = true;
-      }
-      if (attr === 'opacity') {
-        obj.style[attr] = (iCur + iSpeed) / 100;
-        obj.style.filter = `alpha(opacity:${iCur + iSpeed})`;
-      } else {
-        obj.style[attr] = `${iCur + iSpeed}px`;
-      }
-    }
-    // 检测是否停止，是的话关掉定时器
-    if (bStop && iCur === json[attr]) {
-      clearInterval(obj.timer);
-    }
-  }, 30);
-}
+const BgElement = Element.BgElement;
 
 const imgsArr = [
   {
     src: 'qt.png',
-    alt: '前台'
+    alt: '迎宾'
   },
   {
     src: 'yddqz.png',
@@ -103,46 +59,33 @@ const imgsList = ((imgs) => {
 })(imgsArr);
 
 class ImgList extends React.Component {
-  componentDidMount() {
-    const { currentImg } = this.props;
-    const realLi = findDOMNode(this.refs[`imgLi${currentImg}`]);
-    startMove(realLi, {
-      opacity: 100
-    });
-  }
-  // componentWillReceiveProps(nextProps) {
-  //     //每当收到新的props就执行动画
-  //     const { currentImg } = nextProps;
-  //     let realLi = findDOMNode(this.refs['imgLi' + currentImg]);
-  //     startMove(realLi, {
-  //         opacity: 100
-  //     });
-  // }
-  componentDidUpdate() {
-    const { currentImg } = this.props;
-    const realLi = findDOMNode(this.refs[`imgLi${currentImg}`]);
-    startMove(realLi, {
-      opacity: 100
-    });
-  }
   render() {
-    const { currentImg } = this.props;
     return (
-      <div className="img-box">
-        <ul>
-          {imgsList.map((img, index) => {
-            const styleObj = {
-              opacity: index === currentImg ? 0 : 0.01,
-              display: index === currentImg ? 'block' : 'none'
-            };
-            return (
-              <li key={index} style={styleObj} ref={`imgLi${index}`}>
-                <img src={img.src} alt={img.alt} />
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <BannerAnim
+        prefixCls="banner"
+        autoPlay
+        autoPlaySpeed={3900}
+        arrow={false}
+        thumb={false}
+        dragPlay={false}
+      >
+        {imgsList.map((img, index) => (
+          <Element prefixCls="banner-elem" key={imgsArr[index].src}>
+            <BgElement
+              key="bg"
+              className="bg"
+              style={{
+                backgroundImage: `url(${img.src})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+            />
+            <TweenOne className="banner-title" animation={{ y: 30, opacity: 0, type: 'from' }}>
+              {img.alt}
+            </TweenOne>
+          </Element>
+        ))}
+      </BannerAnim>
     );
   }
 }

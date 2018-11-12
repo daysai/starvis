@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { MODIFY_ROOMINFO, NEXT_IMG } from '../actions/restActions';
+import { MODIFY_ROOMINFO } from '../actions/restActions';
 import {
   SELECT_CITY,
   INVALIDATE_WEATHER,
@@ -18,25 +18,6 @@ function roomsInfo(state = [{}, {}], action) {
         }
         return room;
       });
-    default:
-      return state;
-  }
-}
-
-function imgsInfo(
-  state = {
-    imgLength: 3,
-    currentImg: 0
-  },
-  action
-) {
-  switch (action.type) {
-    case NEXT_IMG: {
-      const curN = state.currentImg;
-      return Object.assign({}, state, {
-        currentImg: curN === state.imgLength - 1 ? 0 : curN + 1
-      });
-    }
     default:
       return state;
   }
@@ -85,7 +66,6 @@ function cityInfo(
 
 const rootReducer = combineReducers({
   roomsInfo,
-  imgsInfo,
   selectedCity,
   cityInfo
 });
