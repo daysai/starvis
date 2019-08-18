@@ -7,6 +7,15 @@ import thunkMiddleware from 'redux-thunk';
 import App from './containers/Starvis';
 import rootReducer from './reducers/rootReducer';
 import { fetchPostsIfNeeded } from './actions/weatherActions';
+import { roomsInfoName } from './constants';
+
+let oldRoomsInfo;
+try {
+  const info = window.localStorage.getItem(roomsInfoName);
+  oldRoomsInfo = info ? JSON.parse(info) : undefined;
+} catch (e) {
+  console.log(e);
+}
 
 const initState = {
   selectedCity: 'hangzhou',
@@ -15,34 +24,41 @@ const initState = {
     now: {},
     receivedAt: 0
   },
-  roomsInfo: [
+  roomsInfo: oldRoomsInfo || [
     {
       roomType: '主题房',
-      price: 208
+      price: 208,
+      vip: 188
     },
     {
       roomType: '家庭套房',
-      price: 188
+      price: 188,
+      vip: 168
     },
     {
       roomType: '商务大床房',
-      price: 158
+      price: 158,
+      vip: 138
     },
     {
       roomType: '商务标间',
-      price: 158
+      price: 158,
+      vip: 138
     },
     {
       roomType: '舒适标间',
-      price: 128
+      price: 128,
+      vip: 118
     },
     {
       roomType: '限量大床',
-      price: 118
+      price: 118,
+      vip: 108
     },
     {
       roomType: '温馨大床房',
-      price: 106
+      price: 106,
+      vip: 96
     }
   ]
 };

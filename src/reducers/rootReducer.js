@@ -6,19 +6,28 @@ import {
   REQUEST_WEATHER,
   RECEIVE_WEATHER
 } from '../actions/weatherActions';
+import { roomsInfoName } from '../constants';
 
 function roomsInfo(state = [{}, {}], action) {
+  let newState;
   switch (action.type) {
     case MODIFY_ROOMINFO:
-      return state.map((room, index) => {
+      newState = state.map((room, index) => {
         if (index === action.index) {
           return Object.assign({}, room, {
             roomType: action.roomType,
-            price: action.price
+            price: action.price,
+            vip: action.vip
           });
         }
         return room;
       });
+      try {
+        window.localStorage.setItem(roomsInfoName, JSON.stringify(newState));
+      } catch (e) {
+        console.log(e);
+      }
+      return newState;
     default:
       return state;
   }

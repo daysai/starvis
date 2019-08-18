@@ -38,8 +38,8 @@ Starvis.defaultProps = {};
 
 const mapStatetoProps = state => state;
 const mapDispatchToProps = dispatch => ({
-  onChange: (index, roomType, price) => {
-    dispatch(modifyRoomInfo(index, roomType, price));
+  onChange: (index, roomType, price, vip) => {
+    dispatch(modifyRoomInfo(index, roomType, price, vip));
   }
 });
 export default connect(
