@@ -11,10 +11,6 @@ const imgsArr = [
     alt: '迎宾'
   },
   {
-    src: 'yddqz.png',
-    alt: '夜的第七章'
-  },
-  {
     src: 'xq.png',
     alt: '星晴'
   },
@@ -39,12 +35,32 @@ const imgsArr = [
     alt: '温馨大床房'
   },
   {
+    src: 'xldcf.png',
+    alt: '限量大床房'
+  },
+  {
     src: 'swdcf.png',
     alt: '商务大床房'
   },
   {
-    src: 'swbj.png',
-    alt: '商务标间'
+    src: 'jxdcf.png',
+    alt: '精选大床房'
+  },
+  {
+    src: 'thbzj.png',
+    alt: '特惠标准间'
+  },
+  {
+    src: 'jxscf.png',
+    alt: '精选双床房'
+  },
+  {
+    src: 'jtf.png',
+    alt: '家庭房'
+  },
+  {
+    src: 'swsrj.png',
+    alt: '商务三人间'
   }
 ];
 const imgsList = ((imgs) => {
