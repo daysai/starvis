@@ -1,0 +1,50 @@
+.left-bottom {
+  height: 20%;
+  width: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-bottom img {
+  width: 20%;
+  height: 128px;
+}
+
+.bot-box {
+  height: 100px;
+  width: 20%;
+}
+
+.bot-box span {
+  display: block;
+  height: 50px;
+  color: #fff;
+  font-size: 3.5rem;
+  line-height: 50px;
+  text-align: center;
+}
+
+.city {
+  left: 8px;
+}
+
+.icon {
+  font-size: 60px;
+  color: #fff;
+  text-align: center;
+  line-height: 100px;
+}
+
+.temp {
+  left: 256px;
+}
+
+.temp-now {
+  left: 384px;
+}
+
+.wind {
+  left: 512px;
+}

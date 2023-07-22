@@ -1,7 +1,7 @@
-import React from 'react';
 import BannerAnim, { Element } from 'rc-banner-anim';
 import TweenOne from 'rc-tween-one';
 import 'rc-banner-anim/assets/index.css';
+import './ImgList.css';
 
 const BgElement = Element.BgElement;
 
@@ -67,16 +67,15 @@ const imgsList = ((imgs) => {
   const arrList = [];
   imgs.forEach((img, index) => {
     arrList[index] = {
-      src: require(`images/${img.src}`),
+      src: require(`../images/${img.src}`),
       alt: img.alt
     };
   });
   return arrList;
 })(imgsArr);
 
-class ImgList extends React.Component {
-  render() {
-    return (
+function ImgList() {
+  return (
       <BannerAnim
         prefixCls="banner"
         autoPlay
@@ -96,15 +95,12 @@ class ImgList extends React.Component {
                 backgroundPosition: 'center'
               }}
             />
-            <TweenOne className="banner-title" animation={{ y: 30, opacity: 0, type: 'from' }}>
+            <TweenOne className="banner-title" animation={{ y: 30, opacity: 1, type: 'from' }}>
               {img.alt}
             </TweenOne>
           </Element>
         ))}
       </BannerAnim>
     );
-  }
 }
-
-ImgList.defaultProps = {};
 export default ImgList;

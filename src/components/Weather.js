@@ -1,89 +1,93 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
+import { LocationID, Key } from '../constants';
+import './Weather.css';
 
-const weatherArr = [
-  100,
-  101,
-  102,
-  103,
-  104,
-  200,
-  201,
-  202,
-  203,
-  204,
-  205,
-  206,
-  207,
-  208,
-  209,
-  210,
-  300,
-  301,
-  302,
-  303,
-  304,
-  305,
-  306,
-  307,
-  308,
-  309,
-  310,
-  311,
-  312,
-  313,
-  400,
-  401,
-  402,
-  404,
-  405,
-  406,
-  407,
-  500,
-  501,
-  502,
-  503,
-  504,
-  507,
-  508
-];
-const weatherMap = ((weaArr) => {
-  const map = {};
-  weaArr.forEach((value) => {
-    map[value] = require(`images/${value}.png`);
+let time = null;
+
+function Weather() {
+  const [dailyWeather, setDailyWeather] = useState({
+    tempMax: 0,
+    tempMin: 0,
   });
-  return map;
-})(weatherArr);
-
-class Weather extends React.Component {
-  render() {
-    const { city, weatherNow, tmpMax, tmpMin } = this.props;
-    const { cond, wind, tmp } = weatherNow;
-    const tmpRange = `${tmpMin}~${tmpMax}℃`;
-    const tmpNow = `${tmp}℃`;
-    const windRange = `${wind.sc}级`;
-    return (
-      <div className="left-bottom">
-        <div className="bot-box city">
-          <span>{city}</span>
-          <span>天气</span>
-        </div>
-        <img src={weatherMap[cond.code]} alt={cond.txt} />
-        <div className="bot-box temp">
-          <span>{cond.txt}</span>
-          <span>{tmpRange}</span>
-        </div>
-        <div className="bot-box temp-now">
-          <span>温度</span>
-          <span>{tmpNow}</span>
-        </div>
-        <div className="bot-box wind">
-          <span>{wind.dir}</span>
-          <span>{windRange}</span>
-        </div>
-      </div>
-    );
+  const [nowWeather, setNowWeather] = useState({
+    icon: '100',
+    text: '晴',
+    windDir: '东南风',
+    windScale: '0',
+    temp: '0'
+  });
+  function fetchDaily() {
+    window.fetch(`https://devapi.qweather.com/v7/weather/3d?location=${LocationID}&key=${Key}`)
+      .then((res) => res.json())
+      .then((data = {}) => {
+        const { daily = [] } = data;
+        if (Array.isArray(daily) && daily.length > 0) {
+          setDailyWeather({
+            tempMax: daily[0].tempMax,
+            tempMin: daily[0].tempMin,
+          });
+        }
+      });
   }
+  function fetchNow() {
+    window.fetch(`https://devapi.qweather.com/v7/weather/now?location=${LocationID}&key=${Key}`)
+      .then((res) => res.json())
+      .then((data = {}) => {
+        const { now = {} } = data;
+        setNowWeather({
+          icon: now.icon,
+          text: now.text,
+          windDir: now.windDir,
+          windScale: now.windScale,
+          temp: now.temp
+        });
+      });
+  }
+  function triggerNextWeather() {
+    time = setTimeout(() => {
+      fetchDaily();
+      fetchNow();
+    }, 1800 * 1000);
+  }
+  async function fetchWeather() {
+    try {
+      await fetchDaily();
+      await fetchNow();
+      triggerNextWeather();
+    } catch (error) {
+      triggerNextWeather();
+    }
+  }
+  useEffect(() => {
+    fetchWeather();
+    return () => {
+      if (time) clearTimeout(time);
+    };
+  }, []);
+  const { icon, text, windDir, windScale, temp } = nowWeather;
+  const { tempMax, tempMin } = dailyWeather;
+  return (
+    <div className="left-bottom">
+      <div className="bot-box city">
+        <span>杭州</span>
+        <span>天气</span>
+      </div>
+      <div className="bot-box icon">
+        <i className={`qi-${icon}`}></i>
+      </div>
+      <div className="bot-box temp">
+        <span>{text}</span>
+        <span>{`${tempMin}~${tempMax}℃`}</span>
+      </div>
+      <div className="bot-box temp-now">
+        <span>温度</span>
+        <span>{`${temp}℃`}</span>
+      </div>
+      <div className="bot-box wind">
+        <span>{windDir}</span>
+        <span>{`${windScale}级`}</span>
+      </div>
+    </div>
+  );
 }
-
-Weather.defaultProps = {};
 export default Weather;
